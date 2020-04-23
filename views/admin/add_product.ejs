@@ -1,0 +1,37 @@
+<%- include('../layout/adminHeader'); %>
+
+<h2 class="page-title mb-4">Add a product</h2>
+<a href="/admin/products" class="btn btn-light mb-4">Back to all products</a>
+
+<form method="POST" action="/admin/products/add-product" enctype="multipart/form-data" autocomplete="off">
+
+    <div class="form-group">
+        <label>Title:</label>
+        <input type="text" class="form-control" name="title" value="<%= title %>" placeholder="Title" required>
+    </div>
+    <div class="form-group">
+        <label>Description:</label>
+        <textarea class="form-control" id="ta" name="description" cols="30" rows="10" placeholder="Description" required><%= description %></textarea>
+    </div>
+    <div class="form-group">
+        <label>Category:</label>
+        <select name="category" class="form-control">
+            <% categories.forEach(cate => { %> 
+                <option value="<%= cate.slug %>"><%= cate.title %></option>
+            <% }) %> 
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Price:</label>
+        <input type="number" min="5" class="form-control" name="price" value="<%= price %>" placeholder="Price" required>
+    </div>
+    <div class="form-group">
+        <label>Image:</label>
+        <input type="file" class="form-control p-1" name="picture" id="img" required>
+        <img src="/images/upload_img.png" width="70" height="50" id="imgPreview" alt="no img">
+    </div>
+
+    <button class="btn btn-success my-3">Submit</button>
+</form>
+
+<%- include('../layout/adminFooter'); %>

@@ -1,0 +1,134 @@
+img.pimage {
+    width: 150px;
+    height: 150px;
+
+}
+
+a.pa {
+    display: inline;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+img.spi {
+    width: 100%;
+}
+
+img.cpi {
+    width: 60px;
+}
+
+.products {
+    margin: auto;
+}
+
+.emptyCart img {
+    height: 450px;
+    width: 650px;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.cartTableMargin{
+    margin-left: 2rem;
+}
+
+.ajaxbg{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    opacity: .8;
+    z-index: 2;
+    display: none;
+}
+
+.ajaxinner {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.alert-error {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+/* //paypal loader */
+.loader {
+    border: 6px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 6px solid #555;
+    width: 40px;
+    height: 40px;
+    margin-left: 50%;
+    -webkit-animation: spin 1s linear infinite; /* Safari */
+    animation: spin 1s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@media screen and (max-width: 991px){
+    img.spi {
+        width: 50%;
+    }
+    .emptyCart img {
+        height: 400px;
+        width: 450px;
+    }
+    .cartTableMargin{
+        margin-left: 0;
+    }
+}
+
+@media screen and (max-width: 576px){
+    .products {
+        width: 100%;
+    }
+    .allProduct {
+        text-align: center;
+    }
+    .emptyCart img {
+        margin-top: 0.5rem;
+        height: 300px;
+        width: 310px;
+    }
+    .cartTableMargin{
+        margin-left: 0;
+    }
+}
+
+/* image slider style */
+#image-gallery-image {
+    height: 450px;
+}
+/* .modal-content {
+    height: 600px;
+} */
+.btn:focus, .btn:active, button:focus, button:active {
+outline: none !important;
+box-shadow: none !important;
+}
+
+#image-gallery .modal-footer{
+display: block;
+}
+
+.thumb{
+margin-top: 15px;
+margin-bottom: 15px;
+}

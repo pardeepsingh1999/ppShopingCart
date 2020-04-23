@@ -1,0 +1,54 @@
+<%- include('../layout/adminHeader'); %>
+
+<h2 class="page-title mb-4">Products</h2>
+<a href="/admin/products/add-product" class="btn btn-light mb-4">Add a new product</a>
+
+<% if(count > 0) { %> 
+
+<div class="table-responsive">
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr class="home">
+            <th>Product</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Product Image</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% products.forEach( product => { %>
+            <tr id='id_<%= product.id %>'>
+                <td class="align-middle text-capitalize"><%= product.title %></td>
+                <td class="align-middle">$<%= parseFloat(product.price).toFixed(2) %></td>
+                <td class="align-middle text-capitalize"><%= product.category %></td>
+                <td class="align-middle">
+                    <% if(!product.productImage) { %>
+                        <img src="/images/no_img.png" alt="" width="120" height="120">
+                    <% } else { %>
+                        <img src="/product_images/<%= product.id %>/<%= product.productImage %>" width="60">
+                    <% } %>     
+                </td>
+
+                <td class="align-middle"><a href="/admin/products/edit-product/<%= product.id %>"
+                        onmouseover="hoverActiveEdit(`id_<%= product.id %>`)" onmouseout="hoverRemoveEdit(`id_<%= product.id %>`)">
+                        Edit</a></td>
+
+                <td class="align-middle"><a class="confirmDeletion" href="/admin/products/delete-product/<%= product._id %>" 
+                        onmouseover="hoverActiveDelete(`id_<%= product.id %>`)" onmouseout="hoverRemoveDelete(`id_<%= product.id %>`)">
+                        Delete</a></td> 
+
+            </tr>
+        <% }); %>  
+    </tbody>
+</table>
+</div>
+
+<% } else { %>
+    
+    <h3 class="text-center">There are no product</h3>
+
+<% } %> 
+
+<%- include('../layout/adminFooter'); %>

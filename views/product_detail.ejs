@@ -1,0 +1,51 @@
+<%- include('layout/header'); %>
+
+<div class="row products">
+
+    <div class="col-xs-12 col-md-12 col-lg-5 mt-3 m-2 headSpi">
+        <a data-fancybox="gallery" href="/product_images/<%= pro._id %>/<%= pro.productImage %>">
+            <img class="spi" src="/product_images/<%= pro._id %>/<%= pro.productImage %>">
+        </a>
+    </div>
+
+    <div class="col-xs-12 col-md-12 col-lg-5 mt-3 m-2">
+        <div class="row">
+             
+            <% galleryImages.forEach( img => { %>
+                <% if(img != 'thumbs' ) { %>
+                    <div class="col-xs-2 m-1 border p-1">
+                        <a data-fancybox="gallery" href="/product_images/<%= pro._id %>/gallery/<%= img %>">
+                            <img 
+                            width="50" 
+                            height="50"
+                            src="/product_images/<%= pro._id %>/gallery/thumbs/<%= img %>">
+                        </a>
+                    </div>
+                <% } %> 
+            <% }) %>    
+        
+        </div>
+    </div>
+
+    <div class="card col-xs-12 col-md-12 mt-3">
+        <div class="card-body">
+          <h4 class="card-title text-capitalize"><%= pro.title %></h4>
+          <p class="card-text"><%- pro.description %></p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <!-- <li class="list-group-item"><b>More Details</b></li> -->
+          <li class="list-group-item"><b>Price:</b> $<%= parseFloat(pro.price).toFixed(2) %></li>
+          <li class="list-group-item text-capitalize"><b>Category:</b> <%= pro.category %></li>
+        </ul>
+        <div class="card-body">
+            <% if(loggedIn){ %> 
+                <a href="/cart/add/<%= pro._id %>" class="card-link">Add to card</a>
+            <% } else { %> 
+                <a href="/users/login" class="card-link">You must be logged in to purchase items.</a>
+            <% } %> 
+        </div>
+      </div>
+   
+</div>
+
+<%- include('layout/footer'); %>

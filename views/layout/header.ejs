@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <!-- data fancy cdn -->
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+        <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>        
+
+    <title><%= title %></title>
+
+    <!-- external js  -->
+    <script src="/js/main.js"></script>
+    <script src="/js/imageReviewSlider.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/footerStyle.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+</head>
+<body>
+    <div class="ajaxbg">
+        <div class="ajaxinner">
+            <h3>You are now being redirected to paypal...</h3>
+            <div class="loader"></div>
+        </div>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
+        <div class="container">
+            <a class="navbar-brand" href="/">ppShoppingCart</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <% pages.forEach( page => { %> 
+                    <% if(page.slug == 'home') { %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/"><%= page.title %></a>
+                        </li>
+                    <% } else { %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/<%= page.slug %>"><%= page.title %></a>
+                        </li>
+                    <% } %>   
+                <% }); %> 
+            
+                <!-- <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Other
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+                </li> -->
+            </ul>
+            <ul class="nav navbar-nav ml-auto">
+                <% if(user) { %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/cart/checkout">My Cart (
+                        <% if(typeof cart !== 'undefined') { %>
+                            <%= cart.length %> 
+                        <% } else { %>  
+                            0
+                        <% } %> 
+                    )</a>
+                </li>   
+                    <li class="nav-item">
+                        <a class="nav-link" href="/users/logout">Hi, <%= user.username %> ( logout )</a>
+                    </li>
+                <% } else { %> 
+                    <li class="nav-item">
+                        <a class="nav-link" href="/users/register">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/users/login">Login</a>
+                    </li>
+                <% } %>  
+                <% if(user && user.admin == 1) { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/pages">Admin Area</a>
+                    </li>
+                <% } %> 
+            </ul>
+            </div>
+        </div>
+      </nav>
+
+<div class="container">
+
+    <%- messages('messages', locals) %>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 mb-3">
+            <h3 class="mt-4 mb-2">Categories</h3>
+            <ul class="list-group">
+                <li id="all-product" class="list-group-item activeList">
+                    <a 
+                    onmouseover="activeList('all-product')" onmouseout="deactiveList('all-product')"
+                    href="/products/all-product"
+                    >All products</a></li>
+                <% categories.forEach( (cat) => { %>
+                    <li id="id_<%= cat.id %>" class="list-group-item activeList">
+                        <a 
+                        onmouseover="activeList(`id_<%= cat.id %>`)" onmouseout="deactiveList(`id_<%= cat.id %>`)"
+                        href="/products/<%= cat.slug %>"
+                        ><%= cat.title %></a>
+                    </li>
+                <% }); %>  
+            </ul>
+        </div>
+
+        <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-1"></div> -->
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 mt-4">

@@ -1,0 +1,50 @@
+<%- include('../layout/adminHeader'); %>
+
+<h2 class="page-title mb-4">Pages</h2>
+<a href="/admin/pages/add-page" class="btn btn-light mb-4">Add a new page</a>
+
+<table class="table table-bordered table-striped sorting" style="margin-bottom: 100px;">
+    <thead>
+        <tr class="home">
+            <th>Title</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% pages.forEach( page => { %>
+            <tr id="id_<%= page._id %>" class="<%= page.slug %>">
+                <td><%= page.title %></td>
+                <td><a href="/admin/pages/edit-page/<%= page.id %>"
+                    onmouseover="hoverActiveEdit(`id_<%= page.id %>`)" onmouseout="hoverRemoveEdit(`id_<%= page.id %>`)">
+                    Edit</a></td>
+
+                <% if(page.slug == 'home') { %> 
+                    <td></td>
+                <% } else { %> 
+
+                    <td><a class="confirmDeletion" href="/admin/pages/delete-page/<%= page._id %>" 
+                        onmouseover="hoverActiveDelete(`id_<%= page.id %>`)" onmouseout="hoverRemoveDelete(`id_<%= page.id %>`)">
+                        Delete</a></td> 
+
+                <% }; %> 
+            </tr>
+        <% }); %>  
+    </tbody>
+</table>
+
+<%- include('../layout/adminFooter'); %>
+
+
+<script>
+    $('tbody').sortable({
+        items: "tr:not('.home')",
+        placeholder: 'ui-state-highlight',
+        update: function() {
+            let ids = $('tbody').sortable('serialize');
+            let url = '/admin/pages/reorder-pages';
+            console.log(ids)
+            $.post(url, ids);
+        }
+    });
+</script>

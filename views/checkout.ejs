@@ -1,0 +1,114 @@
+<%- include('layout/header'); %>
+
+<% if(typeof cart !== 'undefined') { %>
+
+<div class="cartTableMargin">
+    <h2>My Cart</h2>
+    <div class="table-responsive mt-4">
+        <table id="alldeleteman" class="table table-striped">
+            <tr>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th></th>
+                <th>Subtotal</th>
+            </tr>
+
+            <% let allTotal = 0; %> 
+            <% cart.forEach( (pro) => { %>
+                <% let subTotal = parseFloat(pro.qty * pro.price).toFixed(2) %> 
+                <% allTotal = allTotal + parseInt(subTotal) %> 
+                <tr id="id_<%= pro.title %>">
+                    <td class="align-middle"><a href="/products/<%= pro.cat %>/<%= pro.proId %>"><img class="cpi" src="<%= pro.image %>"></a></td>
+                    <td class="text-capitalize align-middle"><%= pro.title %></td>
+                    <td class="align-middle">$<%= pro.price %></td>
+                    <td class="align-middle"><%= pro.qty %></td>
+                    <td class="align-middle">
+                        <a 
+                        id="addItem"
+                        class="mr-2" 
+                        href="/cart/update/<%= pro.proId %>?action=add"
+                        onmouseover="addItem(`id_<%= pro.title %>`)" onmouseout="addItemOut(`id_<%= pro.title %>`)"
+                        >+</a>
+                        <a 
+                        id="removeItem"
+                        class="mr-2" 
+                        href="/cart/update/<%= pro.proId %>?action=remove"
+                        onmouseover="hoverActiveEdit(`id_<%= pro.title %>`)" onmouseout="hoverRemoveEdit(`id_<%= pro.title %>`)"
+                        >-</a>
+                        <a 
+                        id="clearItem"
+                        href="/cart/update/<%= pro.proId %>?action=clear"
+                        onmouseover="hoverActiveDelete(`id_<%= pro.title %>`)" onmouseout="hoverRemoveDelete(`id_<%= pro.title %>`)"
+                        >Clear</a>
+                    </td>
+                    <td class="align-middle"><%= subTotal %></td>
+                </tr>
+            <% }) %> 
+            <tr>
+                <td colspan="6" class="text-right"><b>Total: </b>$<%= parseFloat(allTotal).toFixed(2) %></td>
+            </tr>
+            <tr>
+                <td colspan="5" class="text-right">
+                    <a class='clearCart btn btn-danger' 
+                    onmouseover="hoverActiveDelete('alldeleteman')" onmouseout="hoverRemoveDelete('alldeleteman')"
+                    href="/cart/clear">
+                        Clear cart
+                    </a>
+                </td>
+                <td colspan="5" class="text-right">
+                    <a class='btn btn-primary buynow'>
+                        Buy now
+                    </a>
+                </td>
+            </tr>
+        </table>
+
+        <!-- <input type="hidden" name="cmd" value="_ext-enter"> -->
+        <form class="pp" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+            <input type="hidden" name="cmd" value="_cart">
+            <input type="hidden" name="upload" value="1">
+            <!-- email required business paypal  -->
+            <input type="hidden" name="business" value="jultranet-facilitator@gmail.com">
+            <% let num = 0; %>
+            <% cart.forEach((pro)=>{ %>
+                <% num++ %>
+                <input type="hidden" name="item_name_<%= num %>" value="<%= pro.title %>">
+                <input type="hidden" name="amount_<%= num %>" value="<%= pro.price %>"> 
+                <input type="hidden" name="quantity_<%= num %>" value="<%= pro.qty %>"> 
+            <% }) %>   
+           <input type="hidden" name="currency_code" value="USD">
+           <input type="hidden" name="amount" value="<%= allTotal %>">
+           <input type="image" src="http://www.paypal.com/en_US/i/btn/x-click-but01.gif" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
+        </form>
+        
+
+    </div>
+</div>
+<% } else { %>
+<div class="text-center emptyCart">
+    <a href="/products/all-product">
+        <img src="/images/empty_cart.png">
+    </a>
+</div>
+<% } %>  
+
+<script>
+     $('a.clearCart').click(()=>{
+        if(!confirm('Confirm clear cart')) {
+            return false;
+        }
+     });
+
+     $('a.buynow').click((e) => {
+         e.preventDefault();
+
+         $.get('/cart/buynow', () => {
+            //  $('form.pp input[type=image]').click();
+             $('.ajaxbg').show();
+         })
+     })
+</script>
+
+<%- include('layout/footer'); %>

@@ -1,0 +1,17 @@
+<%- include('../layout/adminHeader'); %>
+
+<h2 class="page-title mb-4">Edit category</h2>
+<a href="/admin/categories" class="btn btn-light mb-4">Back to all categories</a>
+
+<form method="POST" action="/admin/categories/edit-category/<%= id %>" autocomplete="off">
+
+    <div class="form-group">
+        <label>Title:</label>
+        <input type="text" class="form-control" name="title" value="<%= title %>" placeholder="Title" required>
+    </div>
+    
+    <input type="hidden" name="id" value="<%= id %>">
+    <button class="btn btn-success my-3">Submit</button>
+</form>
+
+<%- include('../layout/adminFooter'); %>

@@ -1,0 +1,16 @@
+<%- include('../layout/adminHeader'); %>
+
+<h2 class="page-title mb-4">Add a category</h2>
+<a href="/admin/categories" class="btn btn-light mb-4">Back to all categories</a>
+
+<form method="POST" action="/admin/categories/add-category" autocomplete="off">
+
+    <div class="form-group">
+        <label>Title:</label>
+        <input type="text" class="form-control" name="title" value="<%= title %>" placeholder="Title" required>
+    </div>
+    
+    <button class="btn btn-success my-3">Submit</button>
+</form>
+
+<%- include('../layout/adminFooter'); %>

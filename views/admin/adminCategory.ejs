@@ -1,0 +1,32 @@
+<%- include('../layout/adminHeader'); %>
+
+<h2 class="page-title mb-4">Categories</h2>
+<a href="/admin/categories/add-category" class="btn btn-light mb-4">Add a new category</a>
+
+<table class="table table-bordered table-striped" style="margin-bottom: 100px;">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% categories.forEach( category => { %>
+            <tr class="<%= category.title %>" id="id_<%= category._id %>">
+                <td><%= category.title %></td>
+
+                <td><a href="/admin/categories/edit-category/<%= category._id %>"
+                    onmouseover="hoverActiveEdit(`id_<%= category._id %>`)" onmouseout="hoverRemoveEdit(`id_<%= category._id %>`)">         
+                    Edit</a></td>
+
+                <td><a class="confirmDeletion" href="/admin/categories/delete-category/<%= category._id %>" 
+                    onmouseover="hoverActiveDelete(`id_<%= category._id %>`)" onmouseout="hoverRemoveDelete(`id_<%= category._id %>`)">
+                    Delete</a></td> 
+
+            </tr>
+        <% }); %>  
+    </tbody>
+</table>
+
+<%- include('../layout/adminFooter'); %>
